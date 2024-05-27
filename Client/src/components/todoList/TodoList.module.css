@@ -1,0 +1,19 @@
+.todoList {
+  text-align: left;
+  margin: 0 auto;
+}
+
+.todoItem {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  vertical-align: middle;
+  font-size: 1em;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+button {
+  margin-left: 20px;
+}

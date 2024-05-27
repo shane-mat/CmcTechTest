@@ -1,0 +1,10 @@
+.completedTodoList {
+  text-align: left;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.completedTodoItem {
+  display: flex;
+  padding: 10px;
+}
