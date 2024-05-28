@@ -7,8 +7,10 @@ import authReducer from '../../store/authSlice';
 import RegisterForm from '.';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import '@testing-library/jest-dom';
 
 const mock = new MockAdapter(axios);
+jest.mock('../../styles/AuthForm.module.css', () => '');
 
 const renderWithRedux = (component: React.ReactNode) => {
   const store = configureStore({
@@ -32,27 +34,28 @@ describe('RegisterForm Component', () => {
 
   test('renders RegisterForm and registers user', async () => {
     const user = { id: 1, username: 'newuser' };
-    mock.onPost('/api/auth/register').reply(200, user);
+    mock.onPost('/auth/register').reply(200, user);
 
     renderWithRedux(<RegisterForm />);
 
-    fireEvent.change(screen.getByLabelText(/Username/i), { target: { value: 'newuser' } });
     fireEvent.change(screen.getByLabelText(/Email/i), { target: { value: 'new@test.com' } });
     fireEvent.change(screen.getByLabelText(/Password/i), { target: { value: 'password' } });
-    fireEvent.click(screen.getByText(/Register/i));
+    fireEvent.click(screen.getByRole('button'));
 
-    await waitFor(() => expect(screen.queryByText(/Register/i)).not.toBeInTheDocument());
+    await waitFor(() => {
+      expect(window.location.pathname).not.toContain('/register');
+      expect(window.location.pathname).toContain('/login');
+    });
   });
 
   test('handles registration error', async () => {
-    mock.onPost('/api/auth/register').reply(500);
+    mock.onPost('/auth/register').reply(500);
 
     renderWithRedux(<RegisterForm />);
 
-    fireEvent.change(screen.getByLabelText(/Username/i), { target: { value: 'newuser' } });
     fireEvent.change(screen.getByLabelText(/Email/i), { target: { value: 'new@test.com' } });
     fireEvent.change(screen.getByLabelText(/Password/i), { target: { value: 'password' } });
-    fireEvent.click(screen.getByText(/Register/i));
+    fireEvent.click(screen.getByRole('button'));
 
     await waitFor(() => expect(screen.getByText(/Failed to register/i)).toBeInTheDocument());
   });

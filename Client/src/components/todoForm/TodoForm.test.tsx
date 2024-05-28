@@ -1,9 +1,11 @@
+import React from 'react';
 import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { Provider } from 'react-redux';
 import axios from 'axios';
-import store from '../../store';
+import store from '../../../store';
 import TodoForm from '.';
+import '@testing-library/jest-dom';
 
 jest.mock('axios');
 
@@ -22,6 +24,6 @@ test('calls addTodo API when form is submitted', async () => {
 
   await waitFor(() => {
     expect(axios.post).toHaveBeenCalledTimes(1);
-    expect(axios.post).toHaveBeenCalledWith('https://localhost:7272/api/todoitems', { text: 'Test todo' });
+    expect(axios.post).toHaveBeenCalledWith('/todoitems', { text: 'Test todo' });
   });
 });

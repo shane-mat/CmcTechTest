@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTodos, deleteTodo, markTodoCompleted } from '../../store/todoSlice';
-import { RootState, AppDispatch } from '../../store/store';
+import { RootState, AppDispatch } from '../../../store';
 import TodoForm from '../todoForm';
 import styles from './TodoList.module.css';
 import { Todo } from '../../types/Todo';

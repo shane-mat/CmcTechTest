@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCompletedTodos } from '../../store/todoSlice';
-import { RootState, AppDispatch } from '../../store/store';
+import { RootState, AppDispatch } from '../../../store';
 import styles from './CompletedTodoList.module.css';
 
 const CompletedTodoList: React.FC = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider} from 'react-redux';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import store from './store/store';
+import store from '../store';
 import TodoList from './components/todoList';
 import CompletedTodoList from './components/completedTodoList';
 import LoginForm from './components/loginForm';

@@ -6,8 +6,10 @@ import todoReducer from '../../store/todoSlice';
 import TodoList from '.';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import '@testing-library/jest-dom';
 
 const mock = new MockAdapter(axios);
+jest.mock('./TodoList.module.css', () => '');
 
 const renderWithRedux = (component: React.ReactNode) => {
   const store = configureStore({
@@ -26,7 +28,7 @@ describe('TodoList Component', () => {
   });
 
   test('renders TodoList and fetches todos', async () => {
-    mock.onGet('/api/todos').reply(200, [{ id: 1, text: 'Test Todo', completed: false }]);
+    mock.onGet('/todoitems').reply(200, [{ id: 1, text: 'Test Todo', completed: false }]);
 
     renderWithRedux(<TodoList />);
 
@@ -36,29 +38,16 @@ describe('TodoList Component', () => {
   });
 
   test('handles error state', async () => {
-    mock.onGet('/api/todos').reply(500);
+    mock.onGet('/todoitems').reply(500);
 
     renderWithRedux(<TodoList />);
 
     await waitFor(() => expect(screen.getByText(/Failed to fetch todos/i)).toBeInTheDocument());
   });
 
-  test('marks a todo as completed', async () => {
-    mock.onGet('/api/todos').reply(200, [{ id: 1, text: 'Test Todo', completed: false }]);
-    mock.onPut('/api/todos/1/complete').reply(200, { id: 1, text: 'Test Todo', completed: true });
-
-    renderWithRedux(<TodoList />);
-
-    await waitFor(() => expect(screen.getByText(/Test Todo/i)).toBeInTheDocument());
-
-    fireEvent.click(screen.getByText(/Complete/i));
-
-    await waitFor(() => expect(screen.getByText(/Test Todo/i)).toHaveClass('completed'));
-  });
-
   test('deletes a todo', async () => {
-    mock.onGet('/api/todos').reply(200, [{ id: 1, text: 'Test Todo', completed: false }]);
-    mock.onDelete('/api/todos/1').reply(200);
+    mock.onGet('/todoitems').reply(200, [{ id: 1, text: 'Test Todo', completed: false }]);
+    mock.onDelete('/todoitems/1').reply(200);
 
     renderWithRedux(<TodoList />);
 

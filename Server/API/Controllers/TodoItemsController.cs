@@ -2,6 +2,7 @@ using API.Models;
 using AutoMapper;
 using Data.Interfaces;
 using Data.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -9,7 +10,7 @@ namespace ProductCatalog.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class TodoItemsController : ControllerBase
     {
         private readonly ITodoItemsRepository _todoItemsRepository;

@@ -17,7 +17,7 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (credentials: 
     localStorage.setItem('token', response.data.token);
     return response.data;
   } catch (error: any) {
-    return rejectWithValue('Invalid Email or Password');
+    return rejectWithValue('Failed to login');
   }
 });
 

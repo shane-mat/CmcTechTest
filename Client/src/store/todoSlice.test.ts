@@ -32,7 +32,7 @@ describe('todoSlice', () => {
   });
 
   test('fetchTodos should fetch todos and update state', async () => {
-    mock.onGet('/api/todos').reply(200, [{ id: 1, text: 'Test Todo', completed: false }]);
+    mock.onGet('/todoitems').reply(200, [{ id: 1, text: 'Test Todo', completed: false }]);
 
     await store.dispatch(fetchTodos());
 
@@ -43,7 +43,7 @@ describe('todoSlice', () => {
   });
 
   test('fetchCompletedTodos should fetch completed todos and update state', async () => {
-    mock.onGet('/api/todos/completed').reply(200, [{ id: 1, text: 'Completed Todo', completed: true }]);
+    mock.onGet('/todoitems/completed').reply(200, [{ id: 1, text: 'Completed Todo', completed: true }]);
 
     await store.dispatch(fetchCompletedTodos());
 
@@ -55,7 +55,7 @@ describe('todoSlice', () => {
 
   test('addTodo should add a new todo and update state', async () => {
     const newTodo = { id: 2, text: 'New Todo', completed: false };
-    mock.onPost('/api/todos').reply(200, newTodo);
+    mock.onPost('/todoitems').reply(200, newTodo);
 
     await store.dispatch(addTodo('New Todo'));
 
@@ -65,7 +65,7 @@ describe('todoSlice', () => {
   });
 
   test('deleteTodo should delete a todo and update state', async () => {
-    mock.onDelete('/api/todos/1').reply(200);
+    mock.onDelete('/todoitems/1').reply(200);
 
     await store.dispatch(deleteTodo(1));
 
@@ -75,13 +75,13 @@ describe('todoSlice', () => {
   });
 
   test('markTodoCompleted should mark a todo as completed and update state', async () => {
-    const completedTodo = { id: 1, text: 'Test Todo', completed: true };
-    mock.onPut('/api/todos/1/complete').reply(200, completedTodo);
+    const completedTodo = { id: 1, text: 'Completed Todo', completed: true };
+    mock.onPut('/todoitems/1/complete').reply(200, completedTodo);
 
     await store.dispatch(markTodoCompleted(1));
 
     const state = store.getState().todos;
-    expect(state.todos).toContainEqual(completedTodo);
+    expect(state.completedTodos).toContainEqual(completedTodo);
     expect(state.error).toBeNull();
   });
 });

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../store/authSlice';
-import { RootState, AppDispatch } from '../../store/store';
+import { RootState, AppDispatch } from '../../../store';
 import { useNavigate } from 'react-router-dom';
 import styles from '../../styles/AuthForm.module.css';
 
@@ -25,18 +25,20 @@ const LoginForm: React.FC = () => {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <div className={styles.formGroup}>
-          <label>Email</label>
+        <label htmlFor="email">Email</label>
           <input
             type="email"
+            id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
         <div className={styles.formGroup}>
-          <label>Password</label>
+        <label htmlFor="password">Password</label>
           <input
             type="password"
+            id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

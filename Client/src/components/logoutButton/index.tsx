@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../store/authSlice';
-import { AppDispatch, RootState } from '../../store/store';
+import { AppDispatch, RootState } from '../../../store';
 
 const Logout: React.FC = () => {
   const { user } = useSelector((state: RootState) => state.auth);

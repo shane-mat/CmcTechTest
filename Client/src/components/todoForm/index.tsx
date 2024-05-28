@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addTodo, fetchTodos } from '../../store/todoSlice';
-import { AppDispatch } from '../../store/store';
+import { AppDispatch } from '../../../store';
 
 const TodoForm: React.FC = () => {
   const [text, setText] = useState('');
@@ -19,6 +19,7 @@ const TodoForm: React.FC = () => {
       <h3>Add Todo</h3>
       <input
         type="text"
+        placeholder="Add new todo..."
         value={text}
         onChange={(e) => setText(e.target.value)}
         required

@@ -8,8 +8,10 @@ import authReducer from '../../store/authSlice';
 import LoginForm from '.';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import '@testing-library/jest-dom';
 
 const mock = new MockAdapter(axios);
+jest.mock('../../styles/AuthForm.module.css', () => '');
 
 const renderWithRedux = (component: React.ReactNode) => {
   const store = configureStore({
@@ -39,9 +41,9 @@ describe('LoginForm Component', () => {
 
     fireEvent.change(screen.getByLabelText(/Email/i), { target: { value: 'test@test.com' } });
     fireEvent.change(screen.getByLabelText(/Password/i), { target: { value: 'password' } });
-    fireEvent.click(screen.getByText(/Login/i));
+    fireEvent.click(screen.getByRole('button'));
 
-    await waitFor(() => expect(screen.queryByText(/Login/i)).not.toBeInTheDocument());
+    await waitFor(() => expect(window.location.pathname).not.toContain('/login'));
   });
 
   test('handles login error', async () => {
@@ -51,7 +53,7 @@ describe('LoginForm Component', () => {
 
     fireEvent.change(screen.getByLabelText(/Email/i), { target: { value: 'test@test.com' } });
     fireEvent.change(screen.getByLabelText(/Password/i), { target: { value: 'password' } });
-    fireEvent.click(screen.getByText(/Login/i));
+    fireEvent.click(screen.getByRole('button'));
 
     await waitFor(() => expect(screen.getByText(/Failed to login/i)).toBeInTheDocument());
   });
