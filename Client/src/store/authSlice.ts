@@ -1,15 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from '../utils/axiosConfig';
 import { AuthState, User } from '../types/Auth';
-
-interface Credentials {
-  email: string;
-  password: string;
-}
-
-interface RegisterData extends Credentials {
-  username: string;
-}
+import { Credentials } from '../types/Credentials';
 
 const initialState: AuthState = {
   user: JSON.parse(localStorage.getItem('user') || 'null'),
@@ -25,7 +17,7 @@ export const loginUser = createAsyncThunk('auth/loginUser', async (credentials: 
     localStorage.setItem('token', response.data.token);
     return response.data;
   } catch (error: any) {
-    return rejectWithValue(error.response.data);
+    return rejectWithValue('Invalid Email or Password');
   }
 });
 
@@ -34,7 +26,7 @@ export const registerUser = createAsyncThunk('auth/registerUser', async (registe
     const response = await axios.post('/auth/register', registerData);
     return response.data;
   } catch (error: any) {
-    return rejectWithValue(error.response.data);
+    return rejectWithValue('Failed to register');
   }
 });
 

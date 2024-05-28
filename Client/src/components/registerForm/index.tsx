@@ -12,12 +12,14 @@ const RegisterForm: React.FC = () => {
   const { loading, error } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
 
-  const handleSubmit = async(e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await dispatch(registerUser({ email, password }));
-    navigate('/login');
+    const resultAction = await dispatch(registerUser({ email, password }));
+    if (registerUser.fulfilled.match(resultAction)) {
+      navigate('/login');
+    }
   };
-  
+
   return (
     <div className={styles.authForm}>
       <h2>Register</h2>

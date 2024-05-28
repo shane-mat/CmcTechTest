@@ -10,7 +10,7 @@ jest.mock('axios');
 test('calls addTodo API when form is submitted', async () => {
   render(
     <Provider store={store}>
-      <TodoForm onAdd={() => {}}/>
+      <TodoForm />
     </Provider>
   );
 
@@ -22,6 +22,6 @@ test('calls addTodo API when form is submitted', async () => {
 
   await waitFor(() => {
     expect(axios.post).toHaveBeenCalledTimes(1);
-    expect(axios.post).toHaveBeenCalledWith('http://localhost:5000/todos', { text: 'Test todo' });
+    expect(axios.post).toHaveBeenCalledWith('https://localhost:7272/api/todoitems', { text: 'Test todo' });
   });
 });

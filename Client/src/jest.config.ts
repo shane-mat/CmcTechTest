@@ -1,11 +1,10 @@
-export default {
+module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'jest-environment-jsdom',
+  testEnvironment: 'jsdom',
   transform: {
-      "^.+\\.tsx?$": "ts-jest" 
-  // process `*.tsx` files with `ts-jest`
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
   },
-  moduleNameMapper: {
-      '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/__ mocks __/fileMock.js',
-  },
-}
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  transformIgnorePatterns: ['node_modules/(?!(axios)/)'],
+};

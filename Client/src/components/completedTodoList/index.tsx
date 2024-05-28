@@ -6,7 +6,7 @@ import styles from './CompletedTodoList.module.css';
 
 const CompletedTodoList: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const completedTodos = useSelector((state: RootState) => state.todos.completedTodos);
+  const { completedTodos, loading, error } = useSelector((state: RootState) => state.todos);
 
   useEffect(() => {
     dispatch(fetchCompletedTodos());
@@ -15,11 +15,13 @@ const CompletedTodoList: React.FC = () => {
   return (
     <div className={styles.completedTodoList}>
       <h3>List of completed Todos</h3>
-        {completedTodos.map((todo) => (
-          <div key={todo.id} className={styles.completedTodoItem}>
-            <span>{todo.text}</span>
-          </div>
-        ))}
+      {loading && <p>Loading...</p>}
+      {error && <p className={styles.error}>{error}</p>}
+      {completedTodos.map((todo) => (
+        <div key={todo.id} className={styles.completedTodoItem}>
+          <span>{todo.text}</span>
+        </div>
+      ))}
     </div>
   );
 };
